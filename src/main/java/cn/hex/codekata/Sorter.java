@@ -6,7 +6,7 @@ import java.util.*;
  * Created by hex on 2014/4/15.
  */
 public class Sorter {
-
+    //sort string array so that the last character of previous string is the same as first character of following one
     public List<String> sort(List<String> words) {
         Map<Character, List<String>> map = new HashMap<Character, List<String>>();
         for (String word : words) {
