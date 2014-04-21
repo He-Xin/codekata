@@ -3,7 +3,7 @@
 
 // simple function definition
 function add(a, b) {
-    return a +ｂ；
+    return a + b;
 }
 
 // use anonymous function
