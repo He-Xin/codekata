@@ -8,17 +8,18 @@ public class QuickSort {
         if (link == null)
             return null;
 
-        return doSort(link).header;
+        return doSort(link).head;
     }
 
-    private static <T extends Comparable<T>> HeaderTail<T> doSort(Link<T> link) {
+    // The key here is to remember the head and tail of each sorted list so that they can be joined later
+    private static <T extends Comparable<T>> HeadTail<T> doSort(Link<T> link) {
         if (link.getNext() == null) {
-            return new HeaderTail<>(link, link);
+            return new HeadTail<>(link, link);
         }
 
         Link<T> pivot = link; // use first element as pivot
 
-        HeaderTail<T> l = null, g = null;
+        HeadTail<T> l = null, g = null;
 
         Link<T> t = link.getNext(), less = null, greater = null, lessStart = null, greaterStart = null;
 
@@ -62,18 +63,18 @@ public class QuickSort {
         }
 
         if (g != null) {
-            pivot.setNext(g.header);
+            pivot.setNext(g.head);
         }
 
-        return new HeaderTail<>(l == null ? pivot : l.header, g == null ? pivot : g.tail);
+        return new HeadTail<>(l == null ? pivot : l.head, g == null ? pivot : g.tail);
     }
 
-    private static class HeaderTail<T> {
-        Link<T> header;
+    private static class HeadTail<T> {
+        Link<T> head;
         Link<T> tail;
 
-        private HeaderTail(Link<T> header, Link<T> tail) {
-            this.header = header;
+        private HeadTail(Link<T> head, Link<T> tail) {
+            this.head = head;
             this.tail = tail;
         }
     }
