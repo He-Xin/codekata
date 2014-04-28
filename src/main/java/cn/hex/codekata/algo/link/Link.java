@@ -7,6 +7,23 @@ public class Link<T> {
     private T value;
     private Link<T> next;
 
+    @SafeVarargs
+    static <T> Link<T> createLinkList(T... values) {
+        Link<T> start = null, current = null;
+        for (T value : values) {
+            Link<T> l = new Link<>();
+            if (start == null) {
+                start = l;
+            }
+            l.setValue(value);
+            if (current != null) {
+                current.setNext(l);
+            }
+            current = l;
+        }
+        return start;
+    }
+
     public T getValue() {
         return value;
     }

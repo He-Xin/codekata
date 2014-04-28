@@ -2,6 +2,7 @@ package cn.hex.codekata.algo.link;
 
 import org.junit.Test;
 
+import static cn.hex.codekata.algo.link.Link.createLinkList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -110,20 +111,4 @@ public class MergeSortTest {
         assertThat(result.toString(), is("1->2->2->3->4->4"));
     }
 
-    @SafeVarargs
-    private final <T> Link<T> createLinkList(T... values) {
-        Link<T> start = null, current = null;
-        for (T value : values) {
-            Link<T> l = new Link<>();
-            if (start == null) {
-                start = l;
-            }
-            l.setValue(value);
-            if (current != null) {
-                current.setNext(l);
-            }
-            current = l;
-        }
-        return start;
-    }
 }
