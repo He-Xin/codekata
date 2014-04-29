@@ -1,6 +1,10 @@
 package fizzbuzz;
 
 
+import com.google.common.primitives.Ints;
+
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -8,12 +12,11 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class Teacher {
     public int[] gameNumber() {
-        int[] results = new int[3];
-
-        for (int i = 0; i < 3; i++) {
-            results[i] = ThreadLocalRandom.current().nextInt(1, 10);
+        Set<Integer> set = new HashSet<>();
+        while (set.size() < 3) {
+            int num = ThreadLocalRandom.current().nextInt(1, 10);
+            set.add(num);
         }
-
-        return results;
+        return Ints.toArray(set);
     }
 }
