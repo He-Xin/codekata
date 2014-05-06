@@ -19,4 +19,10 @@ describe('basic tests', function() {
 
         expect(result).toEqual([3,2,1]);
     });
+
+    it("should check if string is a rotation of another string", function() {
+        expect("abc".isRotationOf("bca")).toBeTruthy();
+        expect("abc".isRotationOf("bac")).toBeFalsy();
+        expect("abc".isRotationOf("abcd")).toBeFalsy();
+    });
 });

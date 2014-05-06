@@ -17,3 +17,7 @@ Array.prototype.myForEach = function(f, context) {
         f.call(context, this[i], this)
     }
 }
+
+String.prototype.isRotationOf = function(str) {
+    return str.concat(str).indexOf(this) >= 0 && str.length === this.length;
+}
