@@ -41,4 +41,15 @@ public class BinarySearchTest {
         assertThat(BinarySearch.indexOf(ints, 0), is(-1));
 
     }
+
+    @Test
+    public void shouldReturnIndexOfElementInARotatedSortedArray() {
+        Integer[] ints = new Integer[] {2,3,4,5,1};
+
+        assertThat(BinarySearch.indexOf2(ints, 3), is(1));
+        assertThat(BinarySearch.indexOf2(ints, 1), is(4));
+        assertThat(BinarySearch.indexOf(ints, 5), is(3));
+        assertThat(BinarySearch.indexOf2(ints, 0), is(-1));
+        assertThat(BinarySearch.indexOf2(ints, 6), is(-1));
+    }
 }
