@@ -36,4 +36,16 @@ public class SolutionTest {
         assertTrue(Solution.wordBreak("leetcode", dict));
         assertTrue(Solution.wordBreak("leet", dict));
     }
+
+    @Test
+    public void testMaxProfit() {
+        int maxProfit = Solution.maxProfit(new int[] { 2, 1});
+        assertThat(maxProfit, is(0));
+
+        maxProfit = Solution.maxProfit(new int[]{1,2,3});
+        assertThat(maxProfit, is(2));
+
+        maxProfit = Solution.maxProfit(new int[]{1,4,2,3});
+        assertThat(maxProfit, is(3));
+    }
 }

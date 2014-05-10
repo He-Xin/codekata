@@ -39,4 +39,21 @@ public class Solution {
         }
         return false;
     }
+
+    public static int maxProfit(int[] prices) {
+        if (prices.length == 0) return 0;
+        int high = prices[prices.length - 1], low = high, max = 0;
+        for (int i = prices.length - 2; i >=0; i--) {
+            if (prices[i] < low) {
+                low = prices[i];
+                int profit = high - low;
+                max = max < profit ? profit : max;
+            }
+            if (prices[i] > high) {
+                high = prices[i];
+                low = high;
+            }
+        }
+        return max;
+    }
 }
