@@ -1,5 +1,6 @@
 package cn.hex.codekata.leetcode;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -17,17 +18,25 @@ public class Solution {
     }
 
     public static boolean wordBreak(String s, Set<String> dict) {
-            for (int i=1; i<=s.length();i++) {
-                String subStr = s.substring(0, i);
-                if (dict.contains(subStr)) {
-                    if (i == s.length()) {
+        return doWordBreak(s, dict, new HashSet<>());
+    }
+
+    private static boolean doWordBreak(String s, Set<String> dict, Set<String> cannotBreakTOWords) {
+        for (int i = s.length(); i > 0; i--) {
+            String subStr = s.substring(0, i);
+            if (dict.contains(subStr)) {
+                if (i == s.length()) {
+                    return true;
+                }
+                String remaining = s.substring(i);
+                if (!cannotBreakTOWords.contains(remaining)) {
+                    if (doWordBreak(remaining, dict, cannotBreakTOWords))
                         return true;
-                    }
-                    if (wordBreak(s.substring(i), dict)) {
-                        return true;
-                    }
+                    else
+                        cannotBreakTOWords.add(remaining);
                 }
             }
+        }
         return false;
     }
 }
