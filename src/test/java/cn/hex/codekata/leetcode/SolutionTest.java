@@ -2,8 +2,13 @@ package cn.hex.codekata.leetcode;
 
 import org.junit.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by hex.
@@ -19,5 +24,16 @@ public class SolutionTest {
 
         result = Solution.reverseWords("   a   b ");
         assertThat(result, is("b a"));
+    }
+
+    @Test
+    public void testWordBreak() {
+        Set<String> dict = new HashSet<String>();
+        dict.add("leet");
+        dict.add("code");
+
+        assertFalse(Solution.wordBreak("abc", dict));
+        assertTrue(Solution.wordBreak("leetcode", dict));
+        assertTrue(Solution.wordBreak("leet", dict));
     }
 }

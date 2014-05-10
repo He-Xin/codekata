@@ -1,5 +1,7 @@
 package cn.hex.codekata.leetcode;
 
+import java.util.Set;
+
 /**
  * Created by hex.
  */
@@ -12,5 +14,20 @@ public class Solution {
         }
         sb.append(words[0]);
         return sb.toString();
+    }
+
+    public static boolean wordBreak(String s, Set<String> dict) {
+            for (int i=1; i<=s.length();i++) {
+                String subStr = s.substring(0, i);
+                if (dict.contains(subStr)) {
+                    if (i == s.length()) {
+                        return true;
+                    }
+                    if (wordBreak(s.substring(i), dict)) {
+                        return true;
+                    }
+                }
+            }
+        return false;
     }
 }
