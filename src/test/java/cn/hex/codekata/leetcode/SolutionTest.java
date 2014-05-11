@@ -28,7 +28,7 @@ public class SolutionTest {
 
     @Test
     public void testWordBreak() {
-        Set<String> dict = new HashSet<String>();
+        Set<String> dict = new HashSet<>();
         dict.add("leet");
         dict.add("code");
 
@@ -47,5 +47,12 @@ public class SolutionTest {
 
         maxProfit = Solution.maxProfit(new int[]{1,4,2,3});
         assertThat(maxProfit, is(3));
+    }
+
+    @Test
+    public void testSingleNumber() {
+        assertThat(Solution.singleNumber(new int[]{1,2,1,2,3}), is(3));
+        assertThat(Solution.singleNumber(new int[]{3}), is(3));
+        assertThat(Solution.singleNumber(new int[]{1,2,1,2,3,4,5,4,5}), is(3));
     }
 }
