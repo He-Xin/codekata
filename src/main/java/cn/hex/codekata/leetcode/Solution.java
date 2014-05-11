@@ -1,6 +1,8 @@
 package cn.hex.codekata.leetcode;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -38,6 +40,36 @@ public class Solution {
             }
         }
         return false;
+    }
+
+    public static List<String> wordBreak2(String s, Set<String> dict) {
+        List<String> words = doWordBreak2(s, dict, new HashSet<>());
+        if (words == null) return new ArrayList<>();
+        return words;
+    }
+
+    private static List<String> doWordBreak2(String s, Set<String> dict, Set<String> cannotBreakTOWords) {
+        List<String> words = new ArrayList<>();
+        for (int i = 1; i <= s.length(); i++) {
+            String subStr = s.substring(0, i);
+            if (dict.contains(subStr)) {
+                if (i == s.length()) {
+                    words.add(subStr);
+                }
+                String remaining = s.substring(i);
+                if (!cannotBreakTOWords.contains(remaining)) {
+                    List<String> remainingWords = doWordBreak2(remaining, dict, cannotBreakTOWords);
+                    if (remainingWords != null) {
+                        for (String remainingWord : remainingWords) {
+                            words.add(subStr + " " + remainingWord);
+                        }
+                    }
+                    else
+                        cannotBreakTOWords.add(remaining);
+                }
+            }
+        }
+        return words.size() > 0 ? words : null;
     }
 
     public static int maxProfit(int[] prices) {
