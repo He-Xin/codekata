@@ -97,4 +97,52 @@ public class Solution {
         }
         return result;
     }
+
+    /**
+     * Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+     * For example, this binary tree is symmetric:
+     *     1
+     *    / \
+     *   2   2
+     *  / \ / \
+     * 3  4 4  3
+     *
+     * But the following is not:
+     *     1
+     *    / \
+     *   2   2
+     *    \   \
+     *     3   3
+     *
+     * @param root root of tree
+     * @return true if tree is symmetric
+     */
+    public static boolean isSymmetric(TreeNode root) {
+        if (root == null) return true;
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+
+        mirror(left);
+
+        return isSameTree(left, right);
+    }
+
+    private static void mirror(TreeNode node) {
+        if (node == null) return;
+        TreeNode temp = node.left;
+        node.left = node.right;
+        node.right = temp;
+        mirror(node.left);
+        mirror(node.right);
+    }
+
+    private static boolean isSameTree(TreeNode r1, TreeNode r2) {
+        if (r1 == null && r2 == null) return true;
+
+        //noinspection SimplifiableIfStatement
+        if (r1 == null || r2 == null) return false;
+
+        return r1.val == r2.val && isSameTree(r1.left, r2.left) && isSameTree(r1.right, r2.right);
+
+    }
 }
