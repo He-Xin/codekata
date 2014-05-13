@@ -174,7 +174,7 @@ public class Solution {
         Stack<TreeNode> stack = new Stack<>();
         stack.push(root);
 
-        while(! stack.isEmpty()) {
+        while (!stack.isEmpty()) {
             TreeNode node = stack.pop();
             results.add(node.val);
             if (node.right != null)
@@ -186,4 +186,23 @@ public class Solution {
         return results;
     }
 
+    public static List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> results = new ArrayList<>();
+        if (root == null) return results;
+        List<TreeNode> nodesOfSameLevel = new ArrayList<>();
+        nodesOfSameLevel.add(root);
+
+        while (nodesOfSameLevel.size() > 0) {
+            List<TreeNode> nextLevel = new ArrayList<>();
+            List<Integer> levelValues = new ArrayList<>();
+            for (TreeNode node : nodesOfSameLevel) {
+                if (node.left != null) nextLevel.add(node.left);
+                if (node.right != null) nextLevel.add(node.right);
+                levelValues.add(node.val);
+            }
+            results.add(levelValues);
+            nodesOfSameLevel = nextLevel;
+        }
+        return results;
+    }
 }
