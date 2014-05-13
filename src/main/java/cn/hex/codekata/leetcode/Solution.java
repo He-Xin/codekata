@@ -1,10 +1,12 @@
 package cn.hex.codekata.leetcode;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by hex.
  */
+@SuppressWarnings("UnusedDeclaration")
 public class Solution {
     public static String reverseWords(String s) {
         String[] words = s.trim().split("\\s+");
@@ -57,9 +59,7 @@ public class Solution {
                 if (!cannotBreakTOWords.contains(remaining)) {
                     List<String> remainingWords = doWordBreak2(remaining, dict, cannotBreakTOWords);
                     if (remainingWords != null) {
-                        for (String remainingWord : remainingWords) {
-                            words.add(subStr + " " + remainingWord);
-                        }
+                        words.addAll(remainingWords.stream().map(remainingWord -> subStr + " " + remainingWord).collect(Collectors.toList()));
                     } else
                         cannotBreakTOWords.add(remaining);
                 }
@@ -167,7 +167,7 @@ public class Solution {
     }
 
     //Binary Tree Preorder Traversal
-    public List<Integer> preOrderTraversal(TreeNode root) {
+    public static List<Integer> preOrderTraversal(TreeNode root) {
         List<Integer> results = new ArrayList<>();
         if (root == null) return results;
 
