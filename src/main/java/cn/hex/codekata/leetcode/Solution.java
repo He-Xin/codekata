@@ -143,7 +143,7 @@ public class Solution {
     }
 
     //Binary Tree Postorder Traversal
-    public List<Integer> postOrderTraversal(TreeNode root) {
+    public static List<Integer> postOrderTraversal(TreeNode root) {
         List<Integer> results = new ArrayList<>();
         if (root == null) return results;
         Stack<TreeNode> stack = new Stack<>();
@@ -165,4 +165,25 @@ public class Solution {
         }
         return results;
     }
+
+    //Binary Tree Preorder Traversal
+    public List<Integer> preOrderTraversal(TreeNode root) {
+        List<Integer> results = new ArrayList<>();
+        if (root == null) return results;
+
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+
+        while(! stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            results.add(node.val);
+            if (node.right != null)
+                stack.push(node.right);
+            if (node.left != null)
+                stack.push(node.left);
+        }
+
+        return results;
+    }
+
 }
