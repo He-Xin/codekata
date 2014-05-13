@@ -189,8 +189,7 @@ public class Solution {
     public static List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> results = new ArrayList<>();
         if (root == null) return results;
-        List<TreeNode> nodesOfSameLevel = new ArrayList<>();
-        nodesOfSameLevel.add(root);
+        List<TreeNode> nodesOfSameLevel = Arrays.asList(root);
 
         while (nodesOfSameLevel.size() > 0) {
             List<TreeNode> nextLevel = new ArrayList<>();
