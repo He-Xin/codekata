@@ -1,9 +1,6 @@
 package cn.hex.codekata.leetcode;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by hex.
@@ -63,8 +60,7 @@ public class Solution {
                         for (String remainingWord : remainingWords) {
                             words.add(subStr + " " + remainingWord);
                         }
-                    }
-                    else
+                    } else
                         cannotBreakTOWords.add(remaining);
                 }
             }
@@ -75,7 +71,7 @@ public class Solution {
     public static int maxProfit(int[] prices) {
         if (prices.length == 0) return 0;
         int high = prices[prices.length - 1], low = high, max = 0;
-        for (int i = prices.length - 2; i >=0; i--) {
+        for (int i = prices.length - 2; i >= 0; i--) {
             if (prices[i] < low) {
                 low = prices[i];
                 int profit = high - low;
@@ -92,7 +88,7 @@ public class Solution {
     //Given an array of integers, every element appears twice except for one. Find that single one.
     public static int singleNumber(int A[]) {
         int result = A[0];
-        for(int i = 1; i < A.length; i++) {
+        for (int i = 1; i < A.length; i++) {
             result = result ^ A[i];
         }
         return result;
@@ -101,18 +97,18 @@ public class Solution {
     /**
      * Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
      * For example, this binary tree is symmetric:
-     *     1
-     *    / \
-     *   2   2
-     *  / \ / \
+     * 1
+     * / \
+     * 2   2
+     * / \ / \
      * 3  4 4  3
-     *
+     * <p>
      * But the following is not:
-     *     1
-     *    / \
-     *   2   2
-     *    \   \
-     *     3   3
+     * 1
+     * / \
+     * 2   2
+     * \   \
+     * 3   3
      *
      * @param root root of tree
      * @return true if tree is symmetric
@@ -144,5 +140,29 @@ public class Solution {
 
         return r1.val == r2.val && isSameTree(r1.left, r2.left) && isSameTree(r1.right, r2.right);
 
+    }
+
+    //Binary Tree Postorder Traversal
+    public List<Integer> postOrderTraversal(TreeNode root) {
+        List<Integer> results = new ArrayList<>();
+        if (root == null) return results;
+        Stack<TreeNode> stack = new Stack<>();
+        Set<TreeNode> visited = new HashSet<>();
+        stack.push(root);
+        while (!stack.empty()) {
+            TreeNode node = stack.peek();
+            if (node.right != null && !visited.contains(node.right)) {
+                stack.push(node.right);
+            }
+            if (node.left != null && !visited.contains(node.left)) {
+                stack.push(node.left);
+            }
+            if ((node.left == null || visited.contains(node.left)) && (node.right == null || visited.contains(node.right))) {
+                results.add(node.val);
+                visited.add(node);
+                stack.pop();
+            }
+        }
+        return results;
     }
 }
