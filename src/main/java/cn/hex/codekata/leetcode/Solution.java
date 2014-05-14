@@ -204,4 +204,22 @@ public class Solution {
         }
         return results;
     }
+
+    //Given a binary tree, find the maximum path sum.The path may start and end at any node in the tree.
+    public static int maxPathSum(TreeNode root) {
+        List<Integer> pathSums = new ArrayList<>();
+        if (root == null) return 0;
+        maxPathSumFromNode(root, pathSums);
+        return Collections.max(pathSums);
+    }
+
+    private static int maxPathSumFromNode(TreeNode node, List<Integer> pathSums) {
+        if (node == null) return 0;
+        int leftMaxSum = maxPathSumFromNode(node.left, pathSums);
+        int rightMaxSum = maxPathSumFromNode(node.right, pathSums);
+        leftMaxSum = leftMaxSum > 0 ? leftMaxSum : 0;
+        rightMaxSum = rightMaxSum > 0 ? rightMaxSum : 0;
+        pathSums.add(leftMaxSum + node.val + rightMaxSum);
+        return leftMaxSum > rightMaxSum ? node.val + leftMaxSum : node.val + rightMaxSum;
+    }
 }
