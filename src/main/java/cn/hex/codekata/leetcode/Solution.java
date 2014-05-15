@@ -186,6 +186,25 @@ public class Solution {
         return results;
     }
 
+    //Binary Tree inorder Traversal
+    public static List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> results = new ArrayList<>();
+        if (root == null) return results;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode t = root;
+        while (!stack.empty() || t!=null) {
+            TreeNode node = t;
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+            node = stack.pop();
+            results.add(node.val);
+            t = node.right;
+        }
+        return results;
+    }
+
     public static List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> results = new ArrayList<>();
         if (root == null) return results;
