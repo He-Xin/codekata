@@ -191,16 +191,19 @@ public class Solution {
         List<Integer> results = new ArrayList<>();
         if (root == null) return results;
         Stack<TreeNode> stack = new Stack<>();
-        TreeNode t = root;
-        while (!stack.empty() || t!=null) {
-            TreeNode node = t;
-            while (node != null) {
-                stack.push(node);
+        TreeNode node = root;
+        stack.push(root);
+        while (!stack.empty()) {
+            while (node != null && node.left != null) {
                 node = node.left;
+                stack.push(node);
             }
             node = stack.pop();
             results.add(node.val);
-            t = node.right;
+            node = node.right;
+            if (node != null) {
+                stack.push(node);
+            }
         }
         return results;
     }
