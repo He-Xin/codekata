@@ -256,4 +256,30 @@ public class Solution {
         if (rightDepth == 0) return leftDepth + 1;
         return leftDepth < rightDepth ? leftDepth + 1 : rightDepth + 1;
     }
+
+    //Divide two integers without using multiplication, division and mod operator.
+    public int divide(int dividend, int divisor) {
+        int result = 0;
+        boolean sign = dividend > 0 && divisor > 0 || dividend < 0 && divisor < 0;
+        // using type long to avoid overflow
+        List<Long> values = new ArrayList<>();
+        long ldividend = Math.abs((long) dividend), ldivisor = Math.abs((long) divisor);
+
+        while (ldivisor <= ldividend) {
+            values.add(ldivisor);
+            ldivisor = ldivisor << 1;
+        }
+        for (int i = values.size() - 1; i >= 0; i--) {
+            ldivisor = values.get(i);
+            if (ldividend == ldivisor) {
+                result += 1 << i;
+                break;
+            }
+            if (ldividend > ldivisor) {
+                result += 1 << i;
+                ldividend -= ldivisor;
+            }
+        }
+        return sign ? result : 0 - result;
+    }
 }
