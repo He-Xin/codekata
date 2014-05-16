@@ -261,25 +261,27 @@ public class Solution {
     public int divide(int dividend, int divisor) {
         int result = 0;
         boolean sign = dividend > 0 && divisor > 0 || dividend < 0 && divisor < 0;
-        // using type long to avoid overflow
+        // use long to avoid overflow. Math.abs(Integer.MIN_VALUE) will cause overflow
         List<Long> values = new ArrayList<>();
-        long ldividend = Math.abs((long) dividend), ldivisor = Math.abs((long) divisor);
+        long ldividend = Math.abs((long)dividend);
+        long temp = Math.abs((long)divisor);
 
-        while (ldivisor <= ldividend) {
-            values.add(ldivisor);
-            ldivisor = ldivisor << 1;
+        while(temp <= ldividend) {
+            values.add(temp);
+            temp = temp << 1;
         }
-        for (int i = values.size() - 1; i >= 0; i--) {
-            ldivisor = values.get(i);
-            if (ldividend == ldivisor) {
+
+        for (int i = values.size() - 1; i >= 0; i--){
+            temp = values.get(i);
+            if (ldividend == temp) {
                 result += 1 << i;
                 break;
             }
-            if (ldividend > ldivisor) {
+            if (ldividend > temp) {
                 result += 1 << i;
-                ldividend -= ldivisor;
+                ldividend -= temp;
             }
         }
-        return sign ? result : 0 - result;
+        return sign ? result : 0 -result;
     }
 }
