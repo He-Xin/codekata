@@ -317,4 +317,38 @@ public class Solution {
         }
         list.remove(list.size() - 1);
     }
+
+    //Rotate list
+    /*
+     * Given a list, rotate the list to the right by k places, where k is non-negative.
+     * For example:
+     * Given 1->2->3->4->5->NULL and k = 2,
+     * return 4->5->1->2->3->NULL.
+     */
+    public ListNode rotateRight(ListNode head, int n) {
+        if (head == null) {
+            return null;
+        }
+
+        ListNode l1 = head, l2 = head;
+        for (int i = 0; i < n; i++) {
+            l2 = l2.next;
+            if (l2 == null) {
+                l2 = head;
+            }
+        }
+
+        if (l2 == head) return head;
+
+        while (l2.next != null) {
+            l1 = l1.next;
+            l2 = l2.next;
+        }
+
+        l2.next = head;
+        head = l1.next;
+        l1.next = null;
+
+        return head;
+    }
 }
