@@ -258,20 +258,20 @@ public class Solution {
     }
 
     //Divide two integers without using multiplication, division and mod operator.
-    public int divide(int dividend, int divisor) {
+    public static int divide(int dividend, int divisor) {
         int result = 0;
         boolean sign = dividend > 0 && divisor > 0 || dividend < 0 && divisor < 0;
         // use long to avoid overflow. Math.abs(Integer.MIN_VALUE) will cause overflow
         List<Long> values = new ArrayList<>();
-        long ldividend = Math.abs((long)dividend);
-        long temp = Math.abs((long)divisor);
+        long ldividend = Math.abs((long) dividend);
+        long temp = Math.abs((long) divisor);
 
-        while(temp <= ldividend) {
+        while (temp <= ldividend) {
             values.add(temp);
             temp = temp << 1;
         }
 
-        for (int i = values.size() - 1; i >= 0; i--){
+        for (int i = values.size() - 1; i >= 0; i--) {
             temp = values.get(i);
             if (ldividend == temp) {
                 result += 1 << i;
@@ -282,6 +282,39 @@ public class Solution {
                 ldividend -= temp;
             }
         }
-        return sign ? result : 0 -result;
+        return sign ? result : 0 - result;
+    }
+
+    //Valid Palindrome
+    public static boolean isPalindrome(String s) {
+        if (s == null) return false;
+        if (s.isEmpty()) return true;
+        s = s.replaceAll("\\W", "").toLowerCase();
+        for (int i = 0; i < s.length() / 2; i++) {
+            if (s.charAt(i) != s.charAt(s.length() - 1 - i))
+                return false;
+        }
+        return true;
+    }
+
+    //Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+    public static List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> results = new ArrayList<>();
+        if (root == null) return results;
+        traverse(root, sum, new ArrayList<>(), results);
+        return results;
+    }
+
+    private static void traverse(TreeNode node, int sum, List<Integer> list, List<List<Integer>> results) {
+        list.add(node.val);
+        if (node.left != null) traverse(node.left, sum, list, results);
+        if (node.right != null) traverse(node.right, sum, list, results);
+        if (node.left == null && node.right == null) {
+            int total = list.stream().mapToInt(i -> i).sum();
+            if (sum == total) {
+                results.add(new ArrayList<>(list));
+            }
+        }
+        list.remove(list.size() - 1);
     }
 }
