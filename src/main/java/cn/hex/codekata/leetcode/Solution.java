@@ -351,4 +351,54 @@ public class Solution {
 
         return head;
     }
+
+    //Longest Valid Parentheses
+    //Given a string containing just the characters '(' and ')', find the length of the longest valid (well-formed) parentheses substring.
+    public static int longestValidParentheses(String s) {
+        List<State> states = new ArrayList<>();
+        int max = 0;
+        states.add(new State(max, false));
+        for (int i = 1; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                states.add(new State(max, false));
+                continue;
+            }
+
+            int prev = i - 1, l = 0;
+            State state = states.get(i - 1);
+            if (state.endOfValidSeq) {
+                prev = prev - state.length;
+                l = state.length;
+            }
+            if (isValidPair(s, prev, i)) {
+                l = l + 2;
+                if (prev > 0 && states.get(prev - 1).endOfValidSeq) {
+                    l += states.get(prev - 1).length;
+                }
+                states.add(new State(l, true));
+                if (l > max) {
+                    max = l;
+                }
+            } else {
+                states.add(new State(max, false));
+            }
+        }
+        return max;
+    }
+
+    private static boolean isValidPair(String s, int i, int j) {
+        return i >= 0 && s.charAt(i) == '(' && s.charAt(j) == ')';
+    }
+
+    private static class State {
+        int length = 0;
+        boolean endOfValidSeq = false;
+
+        private State(int length, boolean endOfValidSeq) {
+            this.length = length;
+            this.endOfValidSeq = endOfValidSeq;
+        }
+    }
+
+
 }
