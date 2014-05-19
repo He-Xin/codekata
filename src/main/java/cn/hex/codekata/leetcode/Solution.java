@@ -400,5 +400,33 @@ public class Solution {
         }
     }
 
+    //Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
+    public static TreeNode sortedListToBST(ListNode head) {
+        return sortedListToBST(head, null);
+    }
 
+    public static TreeNode sortedListToBST(ListNode head, ListNode tail) {
+        if (head == null) return null;
+        ListNode n1 = getMiddleOfSortedList(head, tail);
+        TreeNode root = new TreeNode(n1.val);
+        if (n1.next != tail) {
+            root.right = sortedListToBST(n1.next, tail);
+        }
+        if(n1 != head) {
+            root.left = sortedListToBST(head, n1);
+        }
+        return root;
+    }
+
+    private static ListNode getMiddleOfSortedList(ListNode head, ListNode tail) {
+        ListNode n1 = head, n2 = head;
+        while(n2 != tail) {
+            n2 = n2.next;
+            if (n2 != tail) {
+                n2 = n2.next;
+                n1 = n1.next;
+            }
+        }
+        return n1;
+    }
 }
