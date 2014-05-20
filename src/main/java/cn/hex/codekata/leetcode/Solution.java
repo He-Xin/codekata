@@ -412,7 +412,7 @@ public class Solution {
         if (n1.next != tail) {
             root.right = sortedListToBST(n1.next, tail);
         }
-        if(n1 != head) {
+        if (n1 != head) {
             root.left = sortedListToBST(head, n1);
         }
         return root;
@@ -420,7 +420,7 @@ public class Solution {
 
     private static ListNode getMiddleOfSortedList(ListNode head, ListNode tail) {
         ListNode n1 = head, n2 = head;
-        while(n2 != tail) {
+        while (n2 != tail) {
             n2 = n2.next;
             if (n2 != tail) {
                 n2 = n2.next;
@@ -428,5 +428,34 @@ public class Solution {
             }
         }
         return n1;
+    }
+
+    /**
+     * Jump game
+     *
+     * Given an array of non-negative integers, you are initially positioned at the first index of the array.
+     * Each element in the array represents your maximum jump length at that position.
+     * Determine if you are able to reach the last index.
+     * For example:
+     * A = [2,3,1,1,4], return true.
+     * A = [3,2,1,0,4], return false
+     */
+    public static boolean canJump(int[] A) {
+        Set<Integer> reachable = new HashSet<>();
+        Stack<Integer> stack = new Stack<>();
+        stack.push(0);
+        while (!stack.empty()) {
+            int index = stack.pop();
+            if (reachable.contains(index))
+                continue;
+            reachable.add(index);
+            int jumps = A[index];
+            for (int i = 1; i <= jumps; i++) {
+                if (index + i < A.length) {
+                    stack.push(index + i);
+                }
+            }
+        }
+        return reachable.contains(A.length - 1);
     }
 }
