@@ -432,7 +432,7 @@ public class Solution {
 
     /**
      * Jump game
-     *
+     * <p>
      * Given an array of non-negative integers, you are initially positioned at the first index of the array.
      * Each element in the array represents your maximum jump length at that position.
      * Determine if you are able to reach the last index.
@@ -441,21 +441,26 @@ public class Solution {
      * A = [3,2,1,0,4], return false
      */
     public static boolean canJump(int[] A) {
-        Set<Integer> reachable = new HashSet<>();
-        Stack<Integer> stack = new Stack<>();
-        stack.push(0);
-        while (!stack.empty()) {
-            int index = stack.pop();
-            if (reachable.contains(index))
-                continue;
-            reachable.add(index);
-            int jumps = A[index];
-            for (int i = 1; i <= jumps; i++) {
-                if (index + i < A.length) {
-                    stack.push(index + i);
-                }
-            }
+        List<Range> ranges = new ArrayList<>();
+        for (int i = 0; i < A.length; i++) {
+            int high = i + A[i] >= A.length ? A.length - 1 : i + A[i];
+            ranges.add(new Range(i, high));
         }
-        return reachable.contains(A.length - 1);
+
+        Range r = new Range(0, 0);
+        for (int i = 0; i < ranges.size() - 1; i++) {
+            r = merge(r, ranges.get(i));
+            if (r.high == A.length - 1)
+                return true;
+        }
+        return r.high == A.length - 1;
+    }
+
+    private static Range merge(Range r1, Range r2) {
+        //precondition: r1.low < r2.low
+        if (r1.high < r2.low || r1.high > r2.high) {
+            return new Range(r1.low, r1.high);
+        }
+        return new Range(r1.low, r2.high);
     }
 }
