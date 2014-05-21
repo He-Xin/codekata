@@ -463,4 +463,36 @@ public class Solution {
         }
         return new Range(r1.low, r2.high);
     }
+
+    //subset. Given a set of distinct integers, S, return all possible subsets.
+    //Elements in a subset must be in non-descending order.
+    //The solution set must not contain duplicate subsets.
+    public static List<List<Integer>> subsets(int[] S) {
+        return subsets(S, 0);
+    }
+
+    private static List<List<Integer>> subsets(int[] S, int start) {
+        List<List<Integer>> results = new ArrayList<>();
+        if (S.length == start) {
+            results.add(new ArrayList<>());
+            return results;
+        }
+        List<List<Integer>> r = subsets(S, start + 1);
+        int val = S[start];
+        for (List<Integer> list : r) {
+            ArrayList<Integer> newList = new ArrayList<>();
+            boolean addedVal = false;
+            for (int value : list) {
+                if (value > val && !addedVal) {
+                    newList.add(val);
+                    addedVal = true;
+                }
+                newList.add(value);
+            }
+            if (!addedVal) newList.add(val);
+            results.add(newList);
+        }
+        results.addAll(r);
+        return results;
+    }
 }
