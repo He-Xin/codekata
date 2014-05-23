@@ -70,4 +70,24 @@ public class SolutionTest {
         assertThat(Solution.singleNumber(new int[]{1, 2, 1, 2, 3, 4, 5, 4, 5}), is(3));
 
     }
+
+    @Test
+    public void testMaxSubArray() {
+       int[] arr = new int[] {-2,1,-3,4,-1,2,1,-5,4};
+        int sum = Solution.maxSubArray(arr);
+        assertThat(sum, is(6));
+
+        arr = new int[] {-2,1,-3,4,-1};
+        sum = Solution.maxSubArray(arr);
+        assertThat(sum, is(4));
+
+        arr = new int[] {-2};
+        sum = Solution.maxSubArray(arr);
+        assertThat(sum, is(-2));
+
+        arr = new int[] {0, 2, 0 ,2};
+        sum = Solution.maxSubArray(arr);
+        assertThat(sum, is(4));
+
+    }
 }

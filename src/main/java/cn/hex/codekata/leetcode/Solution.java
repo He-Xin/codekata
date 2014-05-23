@@ -495,4 +495,39 @@ public class Solution {
         results.addAll(r);
         return results;
     }
+
+    //Maximum Subarray
+    public static int maxSubArray(int[] A) {
+        if (A.length == 0) return 0;
+        int pre = A[0], sum = A[0];
+        for (int i = 1; i < A.length; i++) {
+            if (pre < 0) {
+                pre = A[i];
+                if (A[i] > sum) {
+                    sum = A[i];
+                }
+            } else {
+                if (pre + A[i] > 0) {
+                    pre = pre + A[i];
+                    if (pre > sum)
+                        sum = pre;
+                } else {
+                    pre = A[i];
+                }
+            }
+        }
+        return sum;
+    }
+
+    //Remove Duplicates from Sorted Array
+    public int removeDuplicates(int[] A) {
+        int count = 0;
+        int len = A.length;
+        for (int i = 0; i < len; i++) {
+            if (count == 0 || A[i] != A[count - 1]) {
+                A[count++] = A[i];
+            }
+        }
+        return count;
+    }
 }
