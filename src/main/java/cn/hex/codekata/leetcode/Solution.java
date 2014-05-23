@@ -520,7 +520,7 @@ public class Solution {
     }
 
     //Remove Duplicates from Sorted Array
-    public int removeDuplicates(int[] A) {
+    public static int removeDuplicates(int[] A) {
         int count = 0;
         int len = A.length;
         for (int i = 0; i < len; i++) {
@@ -529,5 +529,33 @@ public class Solution {
             }
         }
         return count;
+    }
+
+    //Pascal's Triangle
+    public static List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> results = new ArrayList<>();
+        for (int i = 0; i < numRows; i++) {
+            ArrayList<Integer> row = new ArrayList<>();
+            if (i == 0) {
+                row.add(i + 1);
+                results.add(row);
+                continue;
+            }
+
+            List<Integer> previousRow = results.get(i - 1);
+            for (int k = 0; k <= i; k++) {
+                if (k == 0) {
+                    row.add(previousRow.get(k));
+                    continue;
+                }
+                if (k == i) {
+                    row.add(previousRow.get(k - 1));
+                    continue;
+                }
+                row.add(previousRow.get(k) + previousRow.get(k - 1));
+            }
+            results.add(row);
+        }
+        return results;
     }
 }
