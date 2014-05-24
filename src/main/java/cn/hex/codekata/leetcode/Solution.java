@@ -559,35 +559,35 @@ public class Solution {
         return results;
     }
 
-
-    public static ArrayList<ArrayList<Integer>> combine(int n, int k) {
-        Set<Set<Integer>> k1 = new HashSet<Set<Integer>>();
-        for (int i=1;i<=n;i++) {
-            Set<Integer> set = new HashSet<Integer>();
-            set.add(i);
-            k1.add(set);
-        }
-
-        Set<Set<Integer>> ki = k1;
-        for (int i=2; i<=k; i++) {
-            Set<Set<Integer>> temp = new HashSet<Set<Integer>>();
-            for (Set<Integer> aKi : ki) {
-                for (Set<Integer> aK1: k1) {
-                    Set<Integer> set = new HashSet<Integer>(aKi);
-                    set.addAll(aK1);
-                    if (set.size() < i || set.contains(temp)) {
-                        continue;
-                    }
-                    temp.add(set);
+    //Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
+    /*
+     * For example,
+     * If n = 4 and k = 2, a solution is:
+     *
+     * [
+     *   [2,4],
+     *   [3,4],
+     *   [2,3],
+     *   [1,2],
+     *   [1,3],
+     *   [1,4],
+     * ]
+     */
+    public static List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> ki = new ArrayList<>();
+        ki.add(new ArrayList<>());
+        for (int m = k; m > 0; m--) {
+            List<List<Integer>> temp = new ArrayList<>();
+            for (List<Integer> previous : ki) {
+                int i = previous.size() == 0 ? 1 : previous.get(previous.size() - 1) + 1;
+                for (; i <= n - m + 1; i++) {
+                    ArrayList<Integer> integers = new ArrayList<>(previous);
+                    integers.add(i);
+                    temp.add(integers);
                 }
             }
             ki = temp;
         }
-
-        ArrayList<ArrayList<Integer>> results = new ArrayList<ArrayList<Integer>>();
-        for (Set<Integer> integers : ki) {
-            results.add(new ArrayList<Integer>(integers));
-        }
-        return results;
+        return ki;
     }
 }

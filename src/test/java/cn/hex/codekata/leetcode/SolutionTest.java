@@ -2,10 +2,7 @@ package cn.hex.codekata.leetcode;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -74,19 +71,19 @@ public class SolutionTest {
 
     @Test
     public void testMaxSubArray() {
-       int[] arr = new int[] {-2,1,-3,4,-1,2,1,-5,4};
+        int[] arr = new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4};
         int sum = Solution.maxSubArray(arr);
         assertThat(sum, is(6));
 
-        arr = new int[] {-2,1,-3,4,-1};
+        arr = new int[]{-2, 1, -3, 4, -1};
         sum = Solution.maxSubArray(arr);
         assertThat(sum, is(4));
 
-        arr = new int[] {-2};
+        arr = new int[]{-2};
         sum = Solution.maxSubArray(arr);
         assertThat(sum, is(-2));
 
-        arr = new int[] {0, 2, 0 ,2};
+        arr = new int[]{0, 2, 0, 2};
         sum = Solution.maxSubArray(arr);
         assertThat(sum, is(4));
 
@@ -94,7 +91,9 @@ public class SolutionTest {
 
     @Test
     public void testCombination() {
-        ArrayList<ArrayList<Integer>> combine = Solution.combine(13, 13);
-        System.out.println(combine);
+        List<List<Integer>> combine = Solution.combine(13, 13);
+        List<List<Integer>> expected = new ArrayList<>();
+        expected.add(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13));
+        assertThat(combine, is(expected));
     }
 }
