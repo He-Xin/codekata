@@ -558,4 +558,36 @@ public class Solution {
         }
         return results;
     }
+
+
+    public static ArrayList<ArrayList<Integer>> combine(int n, int k) {
+        Set<Set<Integer>> k1 = new HashSet<Set<Integer>>();
+        for (int i=1;i<=n;i++) {
+            Set<Integer> set = new HashSet<Integer>();
+            set.add(i);
+            k1.add(set);
+        }
+
+        Set<Set<Integer>> ki = k1;
+        for (int i=2; i<=k; i++) {
+            Set<Set<Integer>> temp = new HashSet<Set<Integer>>();
+            for (Set<Integer> aKi : ki) {
+                for (Set<Integer> aK1: k1) {
+                    Set<Integer> set = new HashSet<Integer>(aKi);
+                    set.addAll(aK1);
+                    if (set.size() < i || set.contains(temp)) {
+                        continue;
+                    }
+                    temp.add(set);
+                }
+            }
+            ki = temp;
+        }
+
+        ArrayList<ArrayList<Integer>> results = new ArrayList<ArrayList<Integer>>();
+        for (Set<Integer> integers : ki) {
+            results.add(new ArrayList<Integer>(integers));
+        }
+        return results;
+    }
 }
