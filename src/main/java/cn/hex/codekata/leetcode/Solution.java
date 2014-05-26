@@ -560,17 +560,18 @@ public class Solution {
     }
 
     //Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
-    /*
+
+    /**
      * For example,
      * If n = 4 and k = 2, a solution is:
-     *
+     * <p>
      * [
-     *   [2,4],
-     *   [3,4],
-     *   [2,3],
-     *   [1,2],
-     *   [1,3],
-     *   [1,4],
+     * [2,4],
+     * [3,4],
+     * [2,3],
+     * [1,2],
+     * [1,3],
+     * [1,4],
      * ]
      */
     public static List<List<Integer>> combine(int n, int k) {
@@ -590,4 +591,37 @@ public class Solution {
         }
         return ki;
     }
+
+    /**
+     * The count-and-say sequence is the sequence of integers beginning as follows:
+     * 1, 11, 21, 1211, 111221, ...
+     * <p>
+     * 1 is read off as "one 1" or 11.
+     * 11 is read off as "two 1s" or 21.
+     * 21 is read off as "one 2, then one 1" or 1211.
+     * Given an integer n, generate the nth sequence.
+     * <p>
+     * Note: The sequence of integers will be represented as a string.
+     */
+    public String countAndSay(int n) {
+        String s = "1";
+        for (int i = 2; i <= n; i++) {
+            int k = 1;
+            StringBuilder temp = new StringBuilder();
+            char current = s.charAt(0);
+            for (int j = 1; j < s.length(); j++) {
+                if (s.charAt(j) == current) {
+                    k++;
+                    continue;
+                }
+                temp.append(k).append(current);
+                current = s.charAt(j);
+                k = 1;
+            }
+            temp.append(k).append(current);
+            s = temp.toString();
+        }
+        return s;
+    }
+
 }
