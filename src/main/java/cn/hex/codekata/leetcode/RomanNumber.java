@@ -29,4 +29,29 @@ public enum RomanNumber {
         }
         return result;
     }
+
+    public static String IntToRoman(int n) {
+        StringBuilder sb = new StringBuilder();
+        RomanNumber[] values = RomanNumber.values();
+        for (int i = values.length - 1; i >= 0; i--) {
+            RomanNumber rn = values[i];
+            int m = n / rn.getValue();
+            if (m == 4 && i + 1 < values.length) {
+                if (sb.length() > 0 && values[i + 1].name().equals(sb.substring(sb.length() - 1))) {
+                    //value 9, 90, ...
+                    sb.deleteCharAt(sb.length() - 1);
+                    sb.append(rn).append(values[i + 2]);
+                } else {
+                    //value 4, 40, ...
+                    sb.append(rn).append(values[i + 1]);
+                }
+            } else {
+                for (int j = 0; j < m; j++) {
+                    sb.append(rn);
+                }
+            }
+            n = n % rn.getValue();
+        }
+        return sb.toString();
+    }
 }
