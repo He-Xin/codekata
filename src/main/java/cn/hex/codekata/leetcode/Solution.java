@@ -624,4 +624,28 @@ public class Solution {
         return s;
     }
 
+    //Given two sorted integer arrays A and B, merge B into A as one sorted array.
+    public static void mergeArray(int A[], int m, int B[], int n) {
+        int index = m + n;
+        while (m>0 || n > 0) {
+            index --;
+            if (m==0) {
+                A[index] = B[n-1];
+                n--;
+                continue;
+            }
+            if (n==0) {
+                A[index] = A[m-1];
+                m--;
+                continue;
+            }
+            if (A[m-1] <= B[n-1]) {
+                A[index] = B[n-1];
+                n--;
+            } else {
+                A[index] = A[m-1];
+                m--;
+            }
+        }
+    }
 }
