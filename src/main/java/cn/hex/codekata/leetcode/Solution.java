@@ -1,6 +1,9 @@
 package cn.hex.codekata.leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -379,25 +382,35 @@ public class Solution {
     //Given two sorted integer arrays A and B, merge B into A as one sorted array.
     public static void mergeArray(int A[], int m, int B[], int n) {
         int index = m + n;
-        while (m>0 || n > 0) {
-            index --;
-            if (m==0) {
-                A[index] = B[n-1];
+        while (m > 0 || n > 0) {
+            index--;
+            if (m == 0) {
+                A[index] = B[n - 1];
                 n--;
                 continue;
             }
-            if (n==0) {
-                A[index] = A[m-1];
+            if (n == 0) {
+                A[index] = A[m - 1];
                 m--;
                 continue;
             }
-            if (A[m-1] <= B[n-1]) {
-                A[index] = B[n-1];
+            if (A[m - 1] <= B[n - 1]) {
+                A[index] = B[n - 1];
                 n--;
             } else {
-                A[index] = A[m-1];
+                A[index] = A[m - 1];
                 m--;
             }
         }
+    }
+
+    //Determine whether an integer is a palindrome. Do this without extra space.
+    public static boolean isPalindrome(int x) {
+        int result = 0, original = x;
+        while (x > 0) {
+            result = result * 10 + x % 10;
+            x = x / 10;
+        }
+        return original == result;
     }
 }
