@@ -77,4 +77,21 @@ public class ListNode {
         }
         return n1;
     }
+
+    //Given a sorted linked list, delete all duplicates such that each element appear only once.
+    public static ListNode deleteDuplicates(ListNode head) {
+        if (head == null) return null;
+        ListNode current = head;
+        while (current.next != null) {
+            ListNode next = current.next;
+            if (current.val == next.val) {
+                current.next = next.next;
+                next.next = null;
+            } else {
+                current = next;
+            }
+        }
+
+        return head;
+    }
 }
