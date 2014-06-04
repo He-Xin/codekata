@@ -413,4 +413,70 @@ public class Solution {
         }
         return original == result;
     }
+
+    //Given two binary strings, return their sum (also a binary string).
+    public static String addBinary(String a, String b) {
+        char plus = '0';
+        StringBuilder result = new StringBuilder();
+        for (int i = a.length() - 1, j = b.length() - 1; i >= 0 || j >= 0; i--, j--) {
+            if (i < 0) {
+                if (plus == '0') {
+                    result.append(b.charAt(j));
+                    plus = '0';
+                    continue;
+                }
+                if (b.charAt(j) == '1') {
+                    result.append('0');
+                    plus = '1';
+                    continue;
+                }
+                result.append(plus);
+                plus = '0';
+                continue;
+            }
+
+
+            if (j < 0) {
+                if (plus == '0') {
+                    result.append(a.charAt(i));
+                    plus = '0';
+                    continue;
+                }
+                if (a.charAt(i) == '1') {
+                    result.append('0');
+                    plus = '1';
+                    continue;
+                }
+                result.append(plus);
+                plus = '0';
+                continue;
+            }
+
+            if (a.charAt(i) == '1' && b.charAt(j) == '1') {
+                result.append(plus);
+                plus = '1';
+                continue;
+            }
+
+            if (a.charAt(i) == '0' && b.charAt(j) == '0') {
+                result.append(plus);
+                plus = '0';
+                continue;
+            }
+
+            if (plus == '1') {
+                result.append('0');
+                plus = '1';
+                continue;
+            }
+
+            result.append('1');
+            plus = '0';
+        }
+
+        if (plus == '1')
+            result.append(plus);
+
+        return result.reverse().toString();
+    }
 }

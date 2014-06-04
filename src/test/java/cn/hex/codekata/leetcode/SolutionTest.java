@@ -96,4 +96,13 @@ public class SolutionTest {
         expected.add(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13));
         assertThat(combine, is(expected));
     }
+
+    @Test
+    public void testAddBinary() {
+        assertThat(Solution.addBinary("1", "1"), is("10"));
+        assertThat(Solution.addBinary("0", "1"), is("1"));
+        assertThat(Solution.addBinary("0", "0"), is("0"));
+        assertThat(Solution.addBinary("1", "11"), is("100"));
+        assertThat(Solution.addBinary("1010", "1011"), is("10101"));
+    }
 }
