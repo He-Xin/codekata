@@ -10,6 +10,7 @@ public class TreeNode {
     int val;
     TreeNode left;
     TreeNode right;
+    TreeNode next;
 
     TreeNode(int x) {
         val = x;
@@ -201,5 +202,47 @@ public class TreeNode {
         rightMaxSum = rightMaxSum > 0 ? rightMaxSum : 0;
         pathSums.add(leftMaxSum + node.val + rightMaxSum);
         return leftMaxSum > rightMaxSum ? node.val + leftMaxSum : node.val + rightMaxSum;
+    }
+
+    /**
+     * Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+     * <p>
+     * Initially, all next pointers are set to NULL.
+     * <p>
+     * Note:
+     * <p>
+     * You may only use constant extra space.
+     * You may assume that it is a perfect binary tree (ie, all leaves are at the same level, and every parent has two children).
+     *
+     * @param root of tree
+     */
+    public static void connect(TreeNode root) {
+        connectLeftRight(root);
+        connectNext(root);
+    }
+
+    private static void connectLeftRight(TreeNode root) {
+        if (root == null) return;
+
+        if (root.left != null) {
+            root.left.next = root.right;
+            connect(root.left);
+            connect(root.right);
+        }
+    }
+
+    private static void connectNext(TreeNode root) {
+        if (root == null) return;
+        TreeNode next = root.next;
+        TreeNode current = root;
+        if (current.left == null) return;
+
+        while (next != null) {
+            current.right.next = next.left;
+
+            current = next;
+            next = next.next;
+        }
+        connectNext(root.left);
     }
 }
