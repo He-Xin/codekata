@@ -217,32 +217,19 @@ public class TreeNode {
      * @param root of tree
      */
     public static void connect(TreeNode root) {
-        connectLeftRight(root);
-        connectNext(root);
-    }
-
-    private static void connectLeftRight(TreeNode root) {
-        if (root == null) return;
-
-        if (root.left != null) {
-            root.left.next = root.right;
-            connect(root.left);
-            connect(root.right);
+        TreeNode leftWall = root;
+        while (leftWall != null) {
+            TreeNode across = leftWall;
+            while (across != null) {
+                if (across.left != null) {
+                    across.left.next = across.right;
+                }
+                if (across.right != null && across.next != null) {
+                    across.right.next = across.next.left;
+                }
+                across = across.next;
+            }
+            leftWall = leftWall.left;
         }
-    }
-
-    private static void connectNext(TreeNode root) {
-        if (root == null) return;
-        TreeNode next = root.next;
-        TreeNode current = root;
-        if (current.left == null) return;
-
-        while (next != null) {
-            current.right.next = next.left;
-
-            current = next;
-            next = next.next;
-        }
-        connectNext(root.left);
     }
 }
