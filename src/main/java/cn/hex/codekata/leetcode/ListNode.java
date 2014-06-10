@@ -256,6 +256,7 @@ public class ListNode {
         return i;
     }
 
+    //Given a linked list, remove the nth node from the end of list and return its head.
     public static ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode node1 = head, node2 = head;
         for (int i = 0; i< n;i++) {
