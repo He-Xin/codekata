@@ -178,4 +178,81 @@ public class ListNode {
 
         return head.next;
     }
+
+    public static ListNode sortList(ListNode head) {
+        int length = computeLength(head);
+        int step = 1;
+        ListNode newHead = new ListNode(0);
+        newHead.next = head;
+        while (step < length) {
+            ListNode start = newHead;
+            while (start != null) {
+                ListNode i = start.next, j = i;
+
+                for (int k = 0; k < step; k++) {
+                    if (j != null) j = j.next;
+                }
+                start = merge(start, i, j, step);
+            }
+            step *= 2;
+        }
+        return newHead.next;
+    }
+
+    private static ListNode merge(ListNode head, ListNode i, ListNode j, int k) {
+        ListNode ret = null, current = null;
+        if (j == null) return null;
+
+        if (i.val > j.val) {
+            head.next = j;
+        }
+
+        int m = 0, n = 0;
+        while (m < k || n < k) {
+            if (m == k) {
+                current.next = j;
+                for (; n < k - 1 && j.next != null; n++) {
+                    j = j.next;
+                }
+                return j;
+            }
+
+            if (n == k || j == null) {
+                for (; m < k - 1; m++) {
+                    i = i.next;
+                }
+                i.next = ret;
+                return i;
+            }
+
+            if (i.val <= j.val) {
+                current = i;
+                i = i.next;
+                m++;
+                continue;
+            }
+
+            if (i.val > j.val) {
+                if (current != null) {
+                    current.next = j;
+                }
+                ret = j.next;
+                j.next = i;
+                current = j;
+                j = ret;
+                n++;
+            }
+        }
+
+        return null;
+    }
+
+    private static int computeLength(ListNode head) {
+        int i = 0;
+        while (head != null) {
+            i++;
+            head = head.next;
+        }
+        return i;
+    }
 }
