@@ -105,4 +105,16 @@ public class SolutionTest {
         assertThat(Solution.addBinary("1", "11"), is("100"));
         assertThat(Solution.addBinary("1010", "1011"), is("10101"));
     }
+
+    @Test
+    public void testDistinctSubSequences() {
+//        assertThat(Solution.numDistinct("A", "A"), is(1));
+//        assertThat(Solution.numDistinct("AA", "A"), is(2));
+//        assertThat(Solution.numDistinct("AAA", "AA"), is(3));
+//
+//        assertThat(Solution.numDistinct("ABCDE", "ACE"), is(1));
+//        assertThat(Solution.numDistinct("ABCDE", "AEC"), is(0));
+//        assertThat(Solution.numDistinct("rabbbit", "rabbit"), is(3));
+        assertThat(Solution.numDistinct("aabb", "abb"), is(2));
+    }
 }

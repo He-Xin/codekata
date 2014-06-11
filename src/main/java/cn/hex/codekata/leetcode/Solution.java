@@ -1,9 +1,6 @@
 package cn.hex.codekata.leetcode;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -513,5 +510,49 @@ public class Solution {
             }
         }
         return sb.toString();
+    }
+
+    // Distinct Subsequences
+    public static int numDistinct(String S, String T) {
+        Map<Character, List<Integer>> map = new HashMap<>();
+        for (int i = 0; i < T.length(); i++) {
+            map.put(T.charAt(i), new ArrayList<>());
+        }
+        for (int i = 0; i < S.length(); i++) {
+            if (map.containsKey(S.charAt(i))) {
+                map.get(S.charAt(i)).add(i);
+            }
+        }
+
+        List<List<Integer>> results = new ArrayList<>();
+        for (int i = 0; i < T.length(); i++) {
+            List<Integer> indexes = map.get(T.charAt(i));
+            if (indexes.size() == 0) return 0;
+
+            if (results.size() == 0) {
+                for (Integer index : indexes) {
+                    results.add(Arrays.asList(index));
+                }
+                continue;
+            }
+
+            List<List<Integer>> temp = new ArrayList<>();
+
+            for (List<Integer> result : results) {
+                int lastIndex = result.get(result.size() - 1);
+                for (Integer index : indexes) {
+                    if (lastIndex >= index)
+                        continue;
+                    List<Integer> newResult = new ArrayList<>();
+                    newResult.addAll(result);
+                    newResult.add(index);
+                    temp.add(newResult);
+                }
+            }
+
+            results = temp;
+        }
+
+        return results.size();
     }
 }
