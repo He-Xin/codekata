@@ -548,4 +548,34 @@ public class Solution {
         }
         return current > max ? current : max;
     }
+
+    //Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+    //The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.
+    public static boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        Map<Character,Character> matches = new HashMap<>();
+        matches.put(')', '(');
+        matches.put(']', '[');
+        matches.put('}', '{');
+        for (int i=0; i<s.length(); i++) {
+            switch(s.charAt(i)) {
+                case '(': case '[': case '{':
+                    stack.push(s.charAt(i));
+                    break;
+
+                case ')': case ']': case '}':
+                    if (!stack.empty() && stack.peek() == matches.get(s.charAt(i))) {
+                        stack.pop();
+                    } else {
+                        return false;
+                    }
+                    break;
+
+                default:
+                    return false;
+            }
+        }
+
+        return stack.empty();
+    }
 }
