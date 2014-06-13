@@ -514,50 +514,23 @@ public class Solution {
 
     // Distinct Subsequences
     public static int numDistinct(String S, String T) {
-        Map<Character, List<Integer>> map = new HashMap<>();
-        for (int i = 0; i < T.length(); i++) {
-            map.put(T.charAt(i), new ArrayList<>());
+        int[][] path = new int[T.length() + 1][S.length() + 1];
+        for (int i=0; i<S.length();i++) {
+            path[0][i] = 1;
         }
-        for (int i = 0; i < S.length(); i++) {
-            if (map.containsKey(S.charAt(i))) {
-                map.get(S.charAt(i)).add(i);
+
+        for (int i=1; i<=T.length();i++) {
+            for (int j=1; j<=S.length(); j++) {
+
+                path[i][j] = path[i][j-1] + ( T.charAt(i-1) == S.charAt(j-1) ? path[i-1][j-1] : 0);
             }
         }
 
-        List<List<Integer>> results = new ArrayList<>();
-        for (int i = 0; i < T.length(); i++) {
-            List<Integer> indexes = map.get(T.charAt(i));
-            if (indexes.size() == 0) return 0;
-
-            if (results.size() == 0) {
-                for (Integer index : indexes) {
-                    results.add(Arrays.asList(index));
-                }
-                continue;
-            }
-
-            List<List<Integer>> temp = new ArrayList<>();
-
-            for (List<Integer> result : results) {
-                int lastIndex = result.get(result.size() - 1);
-                for (Integer index : indexes) {
-                    if (lastIndex >= index)
-                        continue;
-                    List<Integer> newResult = new ArrayList<>();
-                    newResult.addAll(result);
-                    newResult.add(index);
-                    temp.add(newResult);
-                }
-            }
-
-            results = temp;
-        }
-
-        return results.size();
+        return path[T.length()][S.length()];
     }
 
     //Longest Substring Without Repeating Characters
-    public int lengthOfLongestSubstring(String s) {
+    public static int lengthOfLongestSubstring(String s) {
         Map<Character, Integer> map = new HashMap<>();
         int max = 0, current = 0, start = 0;
         for (int i=0; i<s.length(); i++) {
