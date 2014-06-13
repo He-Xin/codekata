@@ -555,4 +555,24 @@ public class Solution {
 
         return results.size();
     }
+
+    //Longest Substring Without Repeating Characters
+    public int lengthOfLongestSubstring(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+        int max = 0, current = 0, start = 0;
+        for (int i=0; i<s.length(); i++) {
+            char c = s.charAt(i);
+            if (!map.containsKey(c) || map.get(c) < start) {
+                current ++;
+                map.put(c, i);
+            } else {
+                int index = map.get(c);
+                max = current > max ? current : max;
+                current = i - index;
+                start = index + 1;
+                map.put(c, i);
+            }
+        }
+        return current > max ? current : max;
+    }
 }
