@@ -515,14 +515,14 @@ public class Solution {
     // Distinct Subsequences
     public static int numDistinct(String S, String T) {
         int[][] path = new int[T.length() + 1][S.length() + 1];
-        for (int i=0; i<S.length();i++) {
+        for (int i = 0; i < S.length(); i++) {
             path[0][i] = 1;
         }
 
-        for (int i=1; i<=T.length();i++) {
-            for (int j=1; j<=S.length(); j++) {
+        for (int i = 1; i <= T.length(); i++) {
+            for (int j = 1; j <= S.length(); j++) {
 
-                path[i][j] = path[i][j-1] + ( T.charAt(i-1) == S.charAt(j-1) ? path[i-1][j-1] : 0);
+                path[i][j] = path[i][j - 1] + (T.charAt(i - 1) == S.charAt(j - 1) ? path[i - 1][j - 1] : 0);
             }
         }
 
@@ -533,10 +533,10 @@ public class Solution {
     public static int lengthOfLongestSubstring(String s) {
         Map<Character, Integer> map = new HashMap<>();
         int max = 0, current = 0, start = 0;
-        for (int i=0; i<s.length(); i++) {
+        for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             if (!map.containsKey(c) || map.get(c) < start) {
-                current ++;
+                current++;
                 map.put(c, i);
             } else {
                 int index = map.get(c);
@@ -553,17 +553,21 @@ public class Solution {
     //The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.
     public static boolean isValid(String s) {
         Stack<Character> stack = new Stack<>();
-        Map<Character,Character> matches = new HashMap<>();
+        Map<Character, Character> matches = new HashMap<>();
         matches.put(')', '(');
         matches.put(']', '[');
         matches.put('}', '{');
-        for (int i=0; i<s.length(); i++) {
-            switch(s.charAt(i)) {
-                case '(': case '[': case '{':
+        for (int i = 0; i < s.length(); i++) {
+            switch (s.charAt(i)) {
+                case '(':
+                case '[':
+                case '{':
                     stack.push(s.charAt(i));
                     break;
 
-                case ')': case ']': case '}':
+                case ')':
+                case ']':
+                case '}':
                     if (!stack.empty() && stack.peek() == matches.get(s.charAt(i))) {
                         stack.pop();
                     } else {
@@ -584,10 +588,10 @@ public class Solution {
     public static String longestCommonPrefix(String[] strs) {
         if (strs.length == 0) return "";
         if (strs.length == 1) return strs[0];
-        StringBuilder sb= new StringBuilder();
-        for (int i=0; i<strs[0].length(); i++) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < strs[0].length(); i++) {
             char c = strs[0].charAt(i);
-            for (int j=1; j < strs.length; j++) {
+            for (int j = 1; j < strs.length; j++) {
                 if (strs[j].length() <= i || strs[j].charAt(i) != c) {
                     return sb.toString();
                 }
@@ -595,5 +599,31 @@ public class Solution {
             sb.append(c);
         }
         return sb.toString();
+    }
+
+    //Given a sorted array and a target value, return the index if the target is found.
+    // If not, return the index where it would be if it were inserted in order.
+    public static int searchInsert(int[] A, int target) {
+        if (A.length == 0) return 0;
+        if (A[A.length - 1] < target) return A.length;
+
+        int low = 0, high = A.length - 1;
+        while (low <= high) {
+            if (A[low] > target) return low;
+            if (A[high] < target) return high + 1;
+
+            int mid = low + (high - low) / 2;
+
+            if (A[mid] == target) return mid;
+
+            if (A[mid] < target) {
+                low = mid + 1;
+
+            } else {
+                high = mid - 1;
+            }
+        }
+
+        return -1;
     }
 }
