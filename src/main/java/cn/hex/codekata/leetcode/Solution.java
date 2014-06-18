@@ -632,13 +632,47 @@ public class Solution {
     //fibonacci sequence
     public static int climbStairs(int n) {
         int n1 = 1, n2 = 2, count = 0;
-        if (n==1) return 1;
-        if (n==2) return 2;
-        for (int i=3; i<=n; i++) {
+        if (n == 1) return 1;
+        if (n == 2) return 2;
+        for (int i = 3; i <= n; i++) {
             count = n1 + n2;
             n1 = n2;
             n2 = count;
         }
         return count;
+    }
+
+    // Generate Parentheses
+    // Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+    // The idea is to insert "()" at every position of each result string
+    // n=1: ()
+    // n=2: ()() | (())
+    // n=3: ()()() | (())() | ()(()) | (()()) | ((()))
+    public List<String> generateParenthesis(int n) {
+        List<String> list = new ArrayList<>();
+        if (n == 0) return list;
+        if (n == 1) {
+            list.add("()");
+            return list;
+        }
+
+        Set<String> results = new HashSet<>();
+        results.add("()");
+        for (int k = 2; k <= n; k++) {
+            Set<String> set = new HashSet<>();
+            for (String s : results) {
+                for (int i = 0; i < s.length(); i++) {
+                    StringBuilder sb = new StringBuilder(s);
+                    sb.insert(i, "()");
+                    String r = sb.toString();
+                    if (!set.contains(r)) {
+                        set.add(r);
+                    }
+                }
+            }
+            results = set;
+        }
+        list.addAll(results);
+        return list;
     }
 }
