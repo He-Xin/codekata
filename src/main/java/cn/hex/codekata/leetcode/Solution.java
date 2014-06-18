@@ -648,7 +648,7 @@ public class Solution {
     // n=1: ()
     // n=2: ()() | (())
     // n=3: ()()() | (())() | ()(()) | (()()) | ((()))
-    public List<String> generateParenthesis(int n) {
+    public static List<String> generateParenthesis(int n) {
         List<String> list = new ArrayList<>();
         if (n == 0) return list;
         if (n == 1) {
