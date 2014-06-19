@@ -705,4 +705,32 @@ public class Solution {
 
         return grid[m - 1][n - 1];
     }
+
+    // Permutations
+    // Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+    public static List<List<Integer>> permuteUnique(int[] num) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (num.length == 0) return result;
+        List<Integer> list = new ArrayList<>();
+        list.add(num[0]);
+        result.add(list);
+        if (num.length == 1) {
+            return result;
+        }
+
+        for (int i=1; i<num.length; i++) {
+            Set<List<Integer>> temp = new HashSet<>();
+
+            for (List<Integer> perm: result) {
+                for (int j=0; j<=perm.size() ; j++) {
+                    List<Integer> newPerm = new ArrayList<>();
+                    newPerm.addAll(perm);
+                    newPerm.add(j, num[i]);
+                    temp.add(newPerm);
+                }
+            }
+            result = new ArrayList<>(temp);
+        }
+        return result;
+    }
 }
