@@ -283,6 +283,33 @@ public class Solution {
         return count;
     }
 
+    /**
+     * Follow up for "Remove Duplicates":
+     * What if duplicates are allowed at most twice?
+     *
+     * For example,
+     * Given sorted array A = [1,1,1,2,2,3],
+     *
+     * Your function should return length = 5, and A is now [1,1,2,2,3].
+     */
+    public static int removeDuplicates2(int[] A) {
+        if (A.length == 0) return 0;
+        int count = 0, repeat = 0, current = A[0];
+        for (int i = 0; i < A.length; i++) {
+            if (A[i] == current) {
+                repeat++;
+                if (repeat <= 2) {
+                    A[count++] = A[i];
+                }
+            } else {
+                current = A[i];
+                repeat = 1;
+                A[count++] = A[i];
+            }
+        }
+        return count;
+    }
+
     //Pascal's Triangle
     public static List<List<Integer>> generate(int numRows) {
         List<List<Integer>> results = new ArrayList<>();
@@ -718,11 +745,11 @@ public class Solution {
             return result;
         }
 
-        for (int i=1; i<num.length; i++) {
+        for (int i = 1; i < num.length; i++) {
             Set<List<Integer>> temp = new HashSet<>();
 
-            for (List<Integer> perm: result) {
-                for (int j=0; j<=perm.size() ; j++) {
+            for (List<Integer> perm : result) {
+                for (int j = 0; j <= perm.size(); j++) {
                     List<Integer> newPerm = new ArrayList<>();
                     newPerm.addAll(perm);
                     newPerm.add(j, num[i]);
