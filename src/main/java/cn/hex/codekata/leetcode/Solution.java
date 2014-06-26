@@ -286,10 +286,10 @@ public class Solution {
     /**
      * Follow up for "Remove Duplicates":
      * What if duplicates are allowed at most twice?
-     *
+     * <p>
      * For example,
      * Given sorted array A = [1,1,1,2,2,3],
-     *
+     * <p>
      * Your function should return length = 5, and A is now [1,1,2,2,3].
      */
     public static int removeDuplicates2(int[] A) {
@@ -759,5 +759,47 @@ public class Solution {
             result = new ArrayList<>(temp);
         }
         return result;
+    }
+
+    //Search in Rotated Sorted Array
+    public static int search(int[] A, int target) {
+        int low = 0;
+        int high = A.length - 1;
+
+        while (low <= high) {
+            if (A[low] == target) return low;
+            if (A[high] == target) return high;
+
+            int mid = low + (high - low) / 2;
+            if (A[mid] == target) return mid;
+
+            if (A[low] < A[mid]) {
+                if (target > A[low] && target < A[mid]) {
+                    return binarySearch(A, low, mid - 1, target);
+                }
+                low = mid + 1;
+                continue;
+            }
+
+            if (target > A[mid] && target < A[high])
+                return binarySearch(A, mid + 1, high, target);
+
+            high = mid - 1;
+        }
+
+        return -1;
+    }
+
+    private static int binarySearch(int[] A, int l, int h, int target) {
+        if (l > h) return -1;
+
+        if (A[l] == target) return l;
+        if (A[h] == target) return h;
+
+        int m = l + (h - l) / 2;
+        if (A[m] == target) return m;
+        if (A[m] < target)
+            return binarySearch(A, m + 1, h, target);
+        return binarySearch(A, l, m - 1, target);
     }
 }
