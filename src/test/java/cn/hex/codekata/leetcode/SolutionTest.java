@@ -108,13 +108,18 @@ public class SolutionTest {
 
     @Test
     public void testDistinctSubSequences() {
-//        assertThat(Solution.numDistinct("A", "A"), is(1));
-//        assertThat(Solution.numDistinct("AA", "A"), is(2));
-//        assertThat(Solution.numDistinct("AAA", "AA"), is(3));
-//
-//        assertThat(Solution.numDistinct("ABCDE", "ACE"), is(1));
-//        assertThat(Solution.numDistinct("ABCDE", "AEC"), is(0));
-//        assertThat(Solution.numDistinct("rabbbit", "rabbit"), is(3));
+        assertThat(Solution.numDistinct("A", "A"), is(1));
+        assertThat(Solution.numDistinct("AA", "A"), is(2));
+        assertThat(Solution.numDistinct("AAA", "AA"), is(3));
+
+        assertThat(Solution.numDistinct("ABCDE", "ACE"), is(1));
+        assertThat(Solution.numDistinct("ABCDE", "AEC"), is(0));
+        assertThat(Solution.numDistinct("rabbbit", "rabbit"), is(3));
         assertThat(Solution.numDistinct("aabb", "abb"), is(2));
+    }
+
+    @Test
+    public void testTrap() {
+        assertThat(Solution.trap(new int[]{0,1,0,2,1,0,1,3,2,1,2,1}), is(6));
     }
 }

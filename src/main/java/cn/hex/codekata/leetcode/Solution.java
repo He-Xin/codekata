@@ -802,4 +802,25 @@ public class Solution {
             return binarySearch(A, m + 1, h, target);
         return binarySearch(A, l, m - 1, target);
     }
+
+    //Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
+    public static int trap(int[] A) {
+        boolean flag = true;
+        int total = 0;
+        while (flag) {
+            flag = false;
+            int left = -1;
+            for (int i = 0; i<A.length; i++) {
+                if (A[i] >= 1) {
+                    flag = true;
+                    if (left != -1 && i- left > 1) {
+                        total += (i - left - 1);
+                    }
+                    left = i;
+                    A[i] = A[i] - 1;
+                }
+            }
+        }
+        return total;
+    }
 }
