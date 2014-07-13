@@ -805,22 +805,35 @@ public class Solution {
 
     //Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
     public static int trap(int[] A) {
-        boolean flag = true;
-        int total = 0;
-        while (flag) {
-            flag = false;
-            int left = -1;
-            for (int i = 0; i<A.length; i++) {
-                if (A[i] >= 1) {
-                    flag = true;
-                    if (left != -1 && i- left > 1) {
-                        total += (i - left - 1);
-                    }
-                    left = i;
-                    A[i] = A[i] - 1;
-                }
+        int start = 0;
+        int end = A.length - 1;
+        int left = 0, high = 0, sum = 0, blocks = 0;
+        // left to highest block
+        for (int i = start; i <= end; i++) {
+            int current = A[i];
+            if (current >= high) {
+                sum += (high * (i - left) - blocks);
+                blocks = 0;
+                high = current;
+                left = i;
             }
+            blocks += A[i];
         }
-        return total;
+
+        high = 0;
+        blocks = 0;
+        int right = end;
+        //right to highest block
+        for (int i = end; i >= left; i--) {
+            int current = A[i];
+            if (current >= high) {
+                sum += (high * (right - i) - blocks);
+                blocks = 0;
+                high = current;
+                right = i;
+            }
+            blocks += A[i];
+        }
+        return sum;
     }
 }
