@@ -883,4 +883,81 @@ public class Solution {
             for (int i=0;i<n;i++) matrix[0][i] = 0;
 
     }
+
+    /*
+     * Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
+     *
+     * The same repeated number may be chosen from C unlimited number of times.
+     *
+     * Note:
+     * All numbers (including target) will be positive integers.
+     * Elements in a combination (a1, a2, … , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤ … ≤ ak).
+     * The solution set must not contain duplicate combinations.
+     *
+     * For example, given candidate set 2,3,6,7 and target 7,
+     * A solution set is:
+     * [7]
+     * [2, 2, 3]
+     */
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+
+        List<Integer> cs = new ArrayList<>();
+        for (int c : candidates) {
+            cs.add(c);
+        }
+
+        Collections.sort(cs);
+        if (target < cs.get(0)) {
+            return result;
+        }
+
+        Map<Integer, List<List<Integer>>> cache = new HashMap<>();
+
+        List<List<Integer>> r = combinationSum(cs, target, cache);
+        if (r == null) r = result;
+        return r;
+    }
+
+    private List<List<Integer>> combinationSum(List<Integer> cs, int target, Map<Integer, List<List<Integer>>> cache) {
+        List<List<Integer>> result = new ArrayList<>();
+        int t = target;
+        if (cache.containsKey(target)) {
+            return cache.get(target);
+        }
+
+        for (int c : cs) {
+
+            target = t - c;
+            if (target == 0) {
+                List<Integer> path = new ArrayList<>();
+                path.add(c);
+                result.add(path);
+                continue;
+            }
+            if (target < cs.get(0) || target < c) {
+                continue;
+            }
+
+
+            List<List<Integer>> r = combinationSum(cs, target, cache);
+
+            if (r != null) {
+                for (List<Integer> subPath : r) {
+                    if (c > subPath.get(0)) continue;
+                    List<Integer> temp = new ArrayList<>(subPath);
+
+                    temp.add(0, c);
+                    result.add(temp);
+                }
+            }
+        }
+
+        if (result.size() == 0)
+            return null;
+
+        cache.put(t, result);
+
+        return result;
+    }
 }
