@@ -3,6 +3,8 @@ package cn.hex.codekata.leetcode;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.Arrays.asList;
+
 /**
  * Created by hex.
  */
@@ -840,9 +842,9 @@ public class Solution {
     //Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in place.
     public void setZeroes(int[][] matrix) {
         int m = matrix.length;
-        if (m==0) return;
+        if (m == 0) return;
         int n = matrix[0].length;
-        if (n==0) return;
+        if (n == 0) return;
 
 
         boolean row0 = false;
@@ -854,14 +856,14 @@ public class Solution {
             }
         }
 
-        for (int i=0;i<n;i++) {
+        for (int i = 0; i < n; i++) {
             if (matrix[0][i] == 0) {
                 row0 = true;
             }
         }
 
-        for (int i=1; i<m; i++) {
-            for (int j=1;j<n;j++) {
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
                 if (matrix[i][j] == 0) {
                     matrix[0][j] = 0;
                     matrix[i][0] = 0;
@@ -870,17 +872,17 @@ public class Solution {
         }
 
 
-        for (int i=1; i<m;i++) {
-            for (int j=1; j<n;j++ ) {
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
                 if (matrix[i][0] == 0 || matrix[0][j] == 0)
                     matrix[i][j] = 0;
             }
         }
 
         if (col0)
-            for (int i=0;i<m;i++) matrix[i][0] = 0;
+            for (int i = 0; i < m; i++) matrix[i][0] = 0;
         if (row0)
-            for (int i=0;i<n;i++) matrix[0][i] = 0;
+            for (int i = 0; i < n; i++) matrix[0][i] = 0;
 
     }
 
@@ -908,55 +910,44 @@ public class Solution {
         }
 
         Collections.sort(cs);
+
         if (target < cs.get(0)) {
             return result;
         }
 
-        Map<Integer, List<List<Integer>>> cache = new HashMap<>();
-
-        List<List<Integer>> r = combinationSum(cs, target, cache);
-        if (r == null) r = result;
-        return r;
+        return combinationSum(cs, target, new HashMap<>());
     }
 
     private List<List<Integer>> combinationSum(List<Integer> cs, int target, Map<Integer, List<List<Integer>>> cache) {
-        List<List<Integer>> result = new ArrayList<>();
-        int t = target;
         if (cache.containsKey(target)) {
             return cache.get(target);
         }
 
-        for (int c : cs) {
+        List<List<Integer>> result = new ArrayList<>();
+        int t = target;
 
+        for (int c : cs) {
             target = t - c;
             if (target == 0) {
-                List<Integer> path = new ArrayList<>();
-                path.add(c);
-                result.add(path);
+                result.add(asList(c));
                 continue;
             }
             if (target < cs.get(0) || target < c) {
                 continue;
             }
 
-
             List<List<Integer>> r = combinationSum(cs, target, cache);
 
-            if (r != null) {
-                for (List<Integer> subPath : r) {
-                    if (c > subPath.get(0)) continue;
-                    List<Integer> temp = new ArrayList<>(subPath);
-
-                    temp.add(0, c);
-                    result.add(temp);
-                }
+            for (List<Integer> subPath : r) {
+                if (c > subPath.get(0)) continue;
+                List<Integer> temp = new ArrayList<>(subPath);
+                temp.add(0, c);
+                result.add(temp);
             }
         }
 
-        if (result.size() == 0)
-            return null;
-
-        cache.put(t, result);
+        if (result.size() != 0)
+            cache.put(t, result);
 
         return result;
     }
