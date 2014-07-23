@@ -127,4 +127,22 @@ public class SolutionTest {
         assertThat(Solution.trap(new int[]{0, 0, 0, 1, 1, 0, 2, 0, 0, 0, 3}), is(7));
         assertThat(Solution.trap(new int[]{0, 0, 0, 1, 1, 0, 2, 0, 0, 0, 3,1,2}), is(8));
     }
+
+    @Test
+    public void searchMatrix() {
+        int[][] matrix = new int[1][1];
+        matrix[0][0] = 1;
+        assertThat(Solution.searchMatrix(matrix, 1), is(true));
+
+        matrix = new int[3][4];
+        matrix[0] = new int[] {1,3,5,7};
+        matrix[1] = new int[] {10,11,16,20};
+        matrix[2] = new int[] {23,30,34,50};
+
+        assertThat(Solution.searchMatrix(matrix, 1), is(true));
+        assertThat(Solution.searchMatrix(matrix, 3), is(true));
+        assertThat(Solution.searchMatrix(matrix, 11), is(true));
+        assertThat(Solution.searchMatrix(matrix, 17), is(false));
+
+    }
 }
