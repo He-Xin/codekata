@@ -232,4 +232,53 @@ public class TreeNode {
             leftWall = leftWall.left;
         }
     }
+
+    //Follow up for problem "Populating Next Right Pointers in Each Node".
+    //What if the given tree could be any binary tree?
+    public static void connect2(TreeNode root) {
+        if (root == null) return;
+        root.next = null;
+        connectSibling(root);
+        connectNodesOfSubtrees(root);
+    }
+
+    private static void connectSibling(TreeNode node) {
+        if (node.left != null) {
+            node.left.next = node.right;
+            connectSibling(node.left);
+        }
+        if (node.right != null) {
+            node.right.next = null;
+            connectSibling(node.right);
+        }
+    }
+
+    private static void connectNodesOfSubtrees(TreeNode node) {
+        if (node == null) return;
+        TreeNode from = getNodeWithChild(node);
+        while (from != null) {
+            TreeNode to = getNodeWithChild(from.next);
+            if (to == null) break;
+            TreeNode lastChildOfFrom = lastChildOfNode(from);
+            lastChildOfFrom.next = firstChildOfNode(to);
+            from = to;
+        }
+        connectNodesOfSubtrees(node.left);
+        connectNodesOfSubtrees(node.right);
+    }
+
+    private static TreeNode getNodeWithChild(TreeNode node) {
+        while (node != null && node.left == null && node.right == null) {
+            node = node.next;
+        }
+        return node;
+    }
+
+    private static TreeNode lastChildOfNode(TreeNode node) {
+        return node.right == null ? node.left : node.right;
+    }
+
+    private static TreeNode firstChildOfNode(TreeNode node) {
+        return node.left == null ? node.right : node.left;
+    }
 }
