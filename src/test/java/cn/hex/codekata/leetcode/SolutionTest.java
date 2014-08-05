@@ -145,4 +145,10 @@ public class SolutionTest {
         assertThat(Solution.searchMatrix(matrix, 17), is(false));
 
     }
+
+    @Test
+    public void testLongestConsecutive() {
+        int[] num = {0, 0};
+        assertThat(Solution.longestConsecutive(num), is(1));
+    }
 }
