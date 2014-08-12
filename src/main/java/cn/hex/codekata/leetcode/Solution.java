@@ -1050,4 +1050,37 @@ public class Solution {
 
         return max;
     }
+
+    public static double pow(double x, int n) {
+        if (n==0) return 1;
+        if (n==1) return x;
+        if (n==-1) return 1/x;
+
+        double result = 1;
+        boolean neg = n < 0;
+        if (neg) {
+            n = 0 - n;
+        }
+
+        List<Double> ps = new ArrayList<>();
+        ps.add(x);
+
+        for (long i=1,j=1; j <n; i++,j*=2) {
+            double prev = ps.get((int)i-1);
+            ps.add(prev * prev);
+        }
+
+        int index = ps.size() -1;
+        while (n > 0 && index >=0) {
+            int t = 1 << index;
+            if (n - t >= 0) {
+                n = n - t;
+                result *= ps.get(index);
+            } else {
+                index --;
+            }
+        }
+
+        return neg ? 1/result : result;
+    }
 }

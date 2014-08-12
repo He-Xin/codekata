@@ -151,4 +151,11 @@ public class SolutionTest {
         int[] num = {0, 0};
         assertThat(Solution.longestConsecutive(num), is(1));
     }
+
+    @Test
+    public void testPow() {
+        assertThat(Solution.pow(2,5), is(32.0));
+        assertThat(Solution.pow(2,-2), is(0.25));
+        assertThat(Solution.pow(8.88023, 3), is(700.2814829452681));
+    }
 }
