@@ -158,4 +158,13 @@ public class SolutionTest {
         assertThat(Solution.pow(2,-2), is(0.25));
         assertThat(Solution.pow(8.88023, 3), is(700.2814829452681));
     }
+
+    @Test
+    public void testGasStation() {
+        int[] gas = new int[] {5,0,9,4,3,3,9,9,1,2};
+        int[] cost = new int[] {6,7,5,9,5,8,7,1,10,5};
+
+        int i = Solution.canCompleteCircuit(gas, cost);
+        System.out.println(i);
+    }
 }
