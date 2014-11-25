@@ -1175,4 +1175,44 @@ public class Solution {
     private static boolean canGoToNextStation(int gas, int cost) {
         return gas - cost >= 0;
     }
+
+    //Interleaving String
+    /*
+     * Given s1, s2, s3, find whether s3 is formed by the interleaving of s1 and s2.
+     *
+     * For example,
+     * Given:
+     * s1 = "aabcc",
+     * s2 = "dbbca",
+     *
+     * When s3 = "aadbbcbcac", return true.
+     * When s3 = "aadbbbaccc", return false
+     *
+     * The idea to solve this problem is to keep state of s1[i], s2[j], s3[i+j]
+     * .if s3[i+j} is interleaving of s1 and s2, then check s3[i+j+1]
+     */
+    public static boolean isInterleave(String s1, String s2, String s3) {
+        if (s1.length() + s2.length() != s3.length()) return false;
+        int m = s1.length();
+        int n = s2.length();
+
+        boolean[][] state = new boolean[n+1][m+1];
+        state[0][0] = true;
+
+        for (int i=0; i<m; i++) {
+            state[0][i+1] = state[0][i] && s1.charAt(i) == s3.charAt(i);
+        }
+
+        for (int i=0; i<n; i++) {
+            state[i+1][0] = state[i][0] && s2.charAt(i) == s3.charAt(i);
+        }
+
+        for (int i=0; i<n; i++) {
+            for (int j=0; j<m; j++) {
+                int x = i+1, y=j+1;
+                state[x][y] = state[x][y-1] && s1.charAt(j) == s3.charAt(x+y-1) || state[x-1][y] && s2.charAt(i) == s3.charAt(x+y-1);
+            }
+        }
+        return state[n][m];
+    }
 }

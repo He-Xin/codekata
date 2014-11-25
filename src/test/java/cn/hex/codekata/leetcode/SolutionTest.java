@@ -167,4 +167,17 @@ public class SolutionTest {
         int i = Solution.canCompleteCircuit(gas, cost);
         System.out.println(i);
     }
+
+    @Test
+    public void testInterleavingStrings() {
+        assertThat(Solution.isInterleave("a", "b", "ab"), is(true));
+        assertThat(Solution.isInterleave("a", "b", "aa"), is(false));
+
+        assertThat(Solution.isInterleave("aabcc","dbbca","aadbbcbcac"), is(true));
+        assertThat(Solution.isInterleave("aabcc","dbbca","aadbbbaccc"), is(false));
+
+        assertThat(Solution.isInterleave("a", "bc", "bac"), is(true));
+        assertThat(Solution.isInterleave("a", "bc", "abc"), is(true));
+
+    }
 }
